@@ -1,0 +1,48 @@
+<{if ($msg != "")}>
+<{include file= $msg_include_dir}>
+<{else}>
+<table class="outer" cellpadding="1" width ="100%">
+	<tr>
+		<th colspan="2"><b>Collecting ban details ...</b></th>
+	</tr>
+
+	<form name="add" method="post" action="index.php?mode=add_ban" onSubmit="return check_input();">
+	<input type="hidden" name="admin_nick" value="<?=$_SESSION['uid'] ?>">
+	<tr class="odd">
+		<td width="30%"  >Nickname: </td>
+		<td  ><input type="text" name="player_nick" ></td>
+	</tr>
+	<tr class="odd">
+		<td width="30%"  >SteamID: </td>
+		<td  ><input type="text" name="player_id" > (e.g.&nbspSTEAM_0:1:4548)</td></tr>
+	<tr class="odd">
+		<td width="30%"  >IP address: </td>
+		<td  ><input type="text" name="player_ip" ></td>
+	</tr>
+	<tr class="odd">
+		<td width="30%"  >Ban Length: </td>
+		<td  ><input type="text" name="ban_length" </td>
+	</tr>
+	<tr class="odd">
+		<td width="30%"  >Ban Type: </td>
+		<td  >
+
+			<select name="ban_type" >
+				<option value="S">SteamID</option>
+				<option value="SI">SteamID + IP Address</option>
+			</select>
+
+		</td>
+	</tr>
+
+	<tr class="odd">
+		<td width="30%"  >Reason: </td>
+		<td  ><input type="text" name="ban_reason" ></td>
+	</tr>
+
+	<tr class="head">
+		<td align="left"><a href="index.php">Ban List</td>
+		<td align="right"><input type="submit" name="add" value=" add "></td>
+	</tr>
+</table>
+<{/if}>

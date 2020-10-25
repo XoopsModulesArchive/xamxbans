@@ -1,0 +1,105 @@
+<table class="outer" cellpadding="1" width ="100%">
+	<tr>
+		<th colspan="4"><b>Viewing ban details ...</b></th>
+	</tr>
+	<tr class="odd">
+		<td >Nickname: </td>
+		<td ><{$ban_details.player_nick}></td>
+	</tr>
+	<tr class="odd">
+		<td>SteamID: </td>
+		<td><{$ban_details.player_steamid}>&nbsp;</td>
+	</tr>
+	<tr class="odd">
+		<td>Effective per:</td>
+		<td><{$ban_details.ban_start}></td>
+	</tr>
+<{if ($ban_details.ban_length == 0) }>
+	<tr class="odd"><td>Ban Length: </td><td>Permanent</td></tr>
+<{else}>
+	<tr class="odd"><td>Ban Length: </td><td><{$ban_details.ban_length}> minutes</td></tr>
+    <{if ($expired == 0) }>
+		<tr class="odd"><td>Expires on: </td><td><{$expire_date}> (<{$timeleft}> remaining)<br>
+	<{else}>
+		<tr class="odd"><td>Expired on: </td><td><{$expire_date}> (allready expired)<br>
+	<{/if}>
+<{/if}>
+
+<{if ($ban_details.ban_type == "I")}>
+		<tr class="odd"><td>IP address: </td><td><{$ban_details.player_ip}></td></tr>
+		<tr class="odd"><td>Bantype: </td><td>IP</td></tr>
+<{/if}>
+<{if ($ban_details.ban_type == "S")}>
+		<tr class="odd"><td>Bantype: </td><td>SteamID</td></tr>
+<{/if}>
+<{if ($ban_details.ban_type == "SI")}>
+		<tr class="odd"><td>IP address: </td><td><{$ban_details.player_ip}></td></tr>
+		<tr class="odd"><td>Bantype: </td><td>SteamID + IP</td></tr>
+<{/if}>
+
+<tr class="odd"><td>Reason: </td><td><{$ban_details.ban_reason}></td></tr>
+
+	<tr class="odd"><td>Ban invoked on:</td><td><{$ban_details.server_name}></td></tr>
+
+	<{if ($bhid != '-1') }>
+		<tr class="odd"><td>Unbanned by:</td><td><{$ban_details.unban_admin}></td></tr>
+		<tr class="odd"><td>Reason for unban:</td><td><{$ban_details.unban_reason}></td></tr>
+		<tr class="odd"><td>Unbanned on:</td><td><{$ban_details.unban_start}></td></tr>
+	<{/if}>
+
+<{ if ($stats_link != "" ) }>
+		<tr class="even"><td colspan="2" align="center"><a href="/modules/xhlstats/index.php?mode=playerinfo&player=<{$stats_link}>"> View players stats page </a></td></tr>
+<{/if}>
+
+	<tr class="head">
+	<td colspan="2" align="right">
+	<{if ($bhid != '-1') }>
+		<{ if ($access.bans_edit == "yes") }> <a href="index.php?mode=edit_ban&bhid=<{$bhid}>"><img src="images/edit.gif" alt="edit"></a> | 	<{/if}>
+		<{ if ($access.bans_delete == "yes") }> <a href="index.php?mode=delete_ban&bhid=<{$bhid}>"><img src="images/delete.gif" alt="delete"></a> | 	<{/if}>
+	<{else}>
+		<{ if ($access.bans_edit == "yes") }> 
+			<a href="index.php?mode=edit_ban&bid=<{$ban_details.ban_id}>">
+			<img src="images/edit.gif" alt="edit"></a> | 
+		<{/if}>
+		<{ if ($access.bans_delete == "yes") }> 
+			<a href="index.php?mode=delete_ban&bid=<{$ban_details.ban_id}>">
+			<img src="images/delete.gif" alt="delete"></a> | 
+		<{/if}> 
+		<{ if ($access.bans_unban == "yes") }> 
+			<a href="index.php?mode=unban_ban&bid=<{$ban_details.ban_id}>">
+			<img src="images/unban.gif" alt="unban"></a> | 
+		<{/if}>
+	<{/if}>
+	<a href="javascript:window.history.back()"><img src="images/back.gif" alt="back"></a></td>
+	</tr>
+</table>
+
+<{if ($bhid == '-1') }>
+<br>
+			<table class="outer" cellspacing="1" width="100%">
+			<tr>
+				<th colspan="4"><b>Viewing previous bans for this user...</b></th>
+			</tr>
+
+			<tr class="head">
+				<td width="1%">&nbsp;</td>
+				<td><i>Date</i></td>
+				<td><i>Admin</i></td>
+				<td><i>Reason</i></td>
+			</tr>
+	<{if ($banhist == 0 ) }>
+		<tr class="odd"><td colspan="5" align="center"><br>No previous bans found for this player...<br><br></td></tr>
+		</table>
+		
+	<{else}>
+		<{foreach item=row from=$banhist}>
+			<tr class="odd" style="CURSOR:hand;" onClick="document.location = 'index.php?mode=ban_details&bhid=<{$row.bhid}>'" onMouseOver="this.className='even'" onMouseOut="this.className='odd'">
+	    	<td><img src="images/html.gif" alt=""></td>
+			<td><{$row.fban_created}></td>
+			<td><{$row.admin_nick}></td>
+			<td><{$row.ban_reason}></td>
+			</tr>
+		<{/foreach}>
+		</table>
+	<{/if}>
+<{/if}>

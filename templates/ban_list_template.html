@@ -1,0 +1,79 @@
+<table cellspacing="1" class="outer" width="100%">
+	<tr>
+		<th <{ if ($showreason == "yes")}>colspan="5"<{else}>colspan="4"<{/if}> ><b>Displaying <{$limit}> most current bans...</b></th>
+	</tr>
+	<form name="jump1">
+	<tr class="head">
+		<td <{ if ($showreason == "yes")}>colspan="5"<{else}>colspan="4"<{/if}> align="right" >Page&nbsp 
+			<{if ($current != 1)}>
+				<a href="index.php?page=<{$back_page}>&limit=<{$limit}>"><img src="images/left.gif"></a>
+			<{/if}><b><{$current}></b> of <b><{$total}></b> 
+			<{if ($next_page != "")}>
+				<a href="index.php?page=<{$next_page}>&limit=<{$limit}>"><img src="images/right.gif"></a>
+			<{/if}>
+
+			| Select 
+			<select name="myjumpbox" OnChange="location.href=jump1.myjumpbox.options[selectedIndex].value" style="font: 8pt bold">
+			<{foreach item=row from=$jumpblock}>
+				<option value="index.php?limit=<{$row.limit}>" <{if ($limit == $row.limit)}> selected <{/if}> ><{$row.limit}></option>
+  		    <{/foreach}>
+			</select> results per page.
+		</td>
+	</tr>
+	</form>
+	<tr class="head">
+		<td width="1%">&nbsp;</td>
+		<td width="20%"><i>Date</i></td>
+		<td width="30%"><i>Admin</i></td>
+		<td width="<{$player_width}>"><i>Player</i></td>
+		<{ if ($showreason == "yes")}>
+			<td width="<{$reason_width}>"><i>Reason</i></td>
+		<{/if}>
+	</tr>
+	<{if ($ban_count == 0) }>
+		<tr ><td <{ if ($showreason == "yes")}>colspan="5"<{else}>colspan="4"<{/if}> align="center"><br>No bans found in the bandatabase.<br><br></td></tr></table>
+	<{/if}> 
+
+	<{foreach item=row from=$bans}>
+	<tr class="odd" style="CURSOR:hand" onclick="document.location='index.php?mode=ban_details&bid=<{$row.bid}>';" 
+				onMouseOver="this.className='even'" onMouseOut="this.className='odd'">
+		<td>
+		<{if ($row.gametype != "")}>
+			<img src="images/<{$row.gametype}>.gif" alt="<{$row.gametype}>">
+		<{else}>	
+			<img src="images/huh.gif" alt="No gametype assigned, please login with administrative rights, and assign a gametype to this server">
+			<{/if}>
+		</td>
+		<td><{$row.fban_created }></td>
+		<td><{$row.admin_nick }></td>
+		<td><{$row.player_nick }></td>
+
+		<{if ($showreason == "yes")}>
+			<td><{$row.ban_reason}></td>
+		<{/if}>
+	</tr>
+	<{/foreach}>
+
+	<form name="jump2">
+		<tr class="head">
+			<td <{ if ($showreason == "yes")}>colspan="5"<{else}>colspan="4"<{/if}> align="right">
+				<{if ($current != 1)}>
+					<a href="index.php?page=<{$back_page}>&limit=<{$limit}>"><img src="images/left.gif"></a>
+				<{/if}>
+				page: <select name="myjumpbox" OnChange="location.href=jump2.myjumpbox.options[selectedIndex].value" style="font: 8pt bold">
+				<{foreach item=row from=$page_array}>
+					<{if ( $page == $row.limit)}>
+						<option value="index.php?page=<{$row.limit}>&limit=<{$limit}>" selected><{$row.page}></option>
+					<{else}>
+						<option value="index.php?page=<{$row.limit}>&limit=<{$limit}>"><{$row.page}></option>
+					<{/if}>
+				<{/foreach}>
+				</select>
+
+				<{if ($next_page != "")}>
+					<a href="index.php?page=<{$next_page}>&limit=<{$limit}>"><img src="images/right.gif"></a>
+				<{/if}>
+			</td>
+		</tr>
+	</form>
+</table>

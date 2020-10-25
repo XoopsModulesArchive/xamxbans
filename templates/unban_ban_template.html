@@ -1,0 +1,73 @@
+<{if ($msg != "")}>
+<{include file= $msg_include_dir}>
+<{else}>
+<table  class="outer" cellpadding="1" width="100%">
+	<tr>
+		<th colspan="4"><b>Going to unban...</b></th>
+	</tr>
+
+	<tr class="odd">
+		<td width="30%"  >Nickname: </td>
+		<td  ><{$ban_details.player_nick}></td>
+	</tr>
+
+	<tr class="odd">
+		<td width="30%"  >SteamID: </td>
+		<td  ><{$ban_details.player_steamid}></td>
+	</tr class="odd">
+
+	<tr class="odd">
+		<td width="30%"  >Effective per:</td>
+		<td  ><{$ban_details.ban_start}></td>
+	</tr>
+
+<{if ($ban_details.ban_length == 0) }>
+	<tr class="odd"><td>Ban Length: </td><td>Permanent</td></tr>
+<{else}>
+	<tr class="odd"><td>Ban Length: </td><td><{$ban_details.ban_length}> minutes</td></tr>
+    <{if ($expired == 0) }>
+		<tr class="odd"><td>Expires on: </td><td><{$expire_date}> (<{$timeleft}> remaining)<br>
+	<{else}>
+		<tr class="odd"><td>Expired on: </td><td><{$expire_date}> (allready expired)<br>
+	<{/if}>
+<{/if}>
+
+	<tr class="odd">
+		<td width="30%" >Ban Type: </td>
+		<td >
+				<{if ($ban_details.ban_type == "S")}>SteamID<{/if}>
+				<{if ($ban_details.ban_type == "I")}>IP Adress<{/if}>
+				<{ if ($ban_details.ban_type == "SI")}>SteamID + IP<{/if}>	
+		</td>
+	</tr>
+
+	<tr class="odd">
+		<td width="30%" >Reason: </td>
+		<td ><{$ban_details.ban_reason}></td>
+	</tr>
+
+    <tr class="odd">
+	    <td width=\"30%\" >Banned by:</td><td ><{$ban_details.admin_nick}></td>
+	</tr>
+
+	<tr class="odd">
+		<td width="30%"  >Ban invoked on:</td>
+		<td  ><{$ban_details.server_name}></td>
+	</tr>
+
+	<form name="unban" method="post" action="index.php?mode=unban_ban">
+	<input type="hidden" name="bid" value="<{$bid}>">
+	<input type="hidden" name="unban_admin_nick" value="<{$xoopsUser}>">
+
+	<tr class="odd">
+		<td width="30%"  >Reason for unban:</td>
+		<td  ><input type="text" name="unban_reason" size="40" ></td>
+	</tr>
+
+	<tr class="even">
+		<td colspan="2" align="right">
+		<input type="submit" name="permunban" value=" unban " ></td>
+	</tr>
+	</form>
+</table>
+<{/if}>

@@ -1,0 +1,7 @@
+<{foreach item=ban from=$block.bans}>
+<table>
+  <tr >
+    <td align="left"><a href="/modules/xamxbans/index.php?mode=ban_details&bid=<{$ban.bid}>"><{$ban.player_nick}></a></td>
+  </tr>
+</table>
+<{/foreach}>

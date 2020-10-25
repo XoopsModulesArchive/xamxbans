@@ -1,0 +1,71 @@
+<{if ($msg != "")}>
+<{include file= $msg_include_dir}>
+<{else}>
+<table  class="outer" cellpadding="1" width="100%">
+	<tr>
+		<th colspan="4"><b>Editing ban details ...</b></b></th>
+	</tr>
+
+	<form name="edit" method="post" action="index.php?mode=edit_ban">
+<{if ( $bid != '-1')}> 
+	<input type="hidden" name="bid" value="<{$bid}>">
+<{/if}>
+<{if ( $bhid != '-1')}> 
+	<input type="hidden" name="bhid" value="<{$bhid}>">
+<{/if}>
+
+	<input type="hidden" name="orig_player_nick" value="<{$ban_details.player_nick}>">
+	<input type="hidden" name="orig_player_id" value="<{$ban_details.player_steamid}>">
+
+<{if ($ban_details.ban_type != "S") }>
+	<input type="hidden" name="orig_player_ip" value="<{$ban_details.player_ip}>">
+<{/if}>
+
+	<input type="hidden" name="orig_ban_length" value="<{$ban_details.ban_length}>">
+	<input type="hidden" name="orig_ban_type" value="<{$ban_details.ban_type}>">
+	<input type="hidden" name="orig_ban_reason" value="<{$ban_details.ban_reason}>">
+
+	<tr class="odd">
+		<td  width="30%" >Nickname: </td>
+		<td ><input type="text" name="player_nick" value="<{$ban_details.player_nick}>" style="font: 8pt bold; width: 200px"></td>
+	</tr>
+
+	<tr class="odd">
+		<td width="30%" >SteamID: </td>
+		<td ><input type="text" name="player_id" value="<{$ban_details.player_steamid}>" style="font: 8pt bold; width: 200px"></td>
+	</tr>
+
+	<tr class="odd">
+		<td width="30%" >IP address: </td>
+		<td ><input type="text" name="player_ip" value="<{$ban_details.player_ip}>" style="font: 8pt bold; width: 200px"></td>
+	</tr>
+
+	<tr class="odd">
+		<td width="30%" >Ban Length: </td>
+		<td ><input type="text" name="ban_length" value="<{$ban_details.ban_length}>" style="font: 8pt bold; width: 200px"></td>
+	</tr>
+
+	<tr class="odd">
+		<td width="30%" >Ban Type: </td>
+		<td >
+
+			<select name="ban_type" style="font: 8pt bold; width: 200px">
+				<option value="S" <{if ($ban_details.ban_type == "S")}>"selected"<{/if}>>SteamID</option>
+				<option value="I" <{if ($ban_details.ban_type == "I")}>"selected"<{/if}>>IP Adress</option>
+				<option value="SI" <{ if ($ban_details.ban_type == "SI")}>"selected"<{/if}>>SteamID + IP</option>
+			</select>
+
+		</td>
+	</tr>
+
+	<tr class="odd">
+		<td width="30%" >Reason: </td>
+		<td ><input type="text" name="ban_reason" value="<{$ban_details.ban_reason}>" style="font: 8pt bold; width: 200px"></td>
+	</tr>
+
+	<tr class="even">
+		<td colspan="2" align="right"><input type="submit" name="permedit" value=" apply " style="font: 8pt bold"></td>
+	</tr>
+	</form>
+</table>
+<{/if}>
